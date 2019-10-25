@@ -1,6 +1,3 @@
 import facerecog
-import os
 
-facerecog.main('1')
-
-# facerecog.printmenu()
+facerecog.main('2', 10, "Aaron Paul124_221.jpg")

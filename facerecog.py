@@ -55,30 +55,40 @@ def cos_sim(sample, test_data):
     result = dotproduct/(norm(sample_vector)*norm(test_data_vector))
     return test_data, result
 
-def main(choice):
+def main(choice, T, sample):
     datauji_path = 'datauji/'
     datauji = [os.path.join(datauji_path, p) for p in sorted(os.listdir(datauji_path))]
     # sample = input("Masukkan nama file: ")
-    sample = os.path.join(datauji_path,"taylor swift4.jpg")
+    sample = os.path.join(datauji_path, sample)
+
     if choice == '1' or choice == 'Jarak  Euclidean' or choice == 'jarak euclidean':
         # METODE COSINE SIMILARITY
         cos_sim_arr = []
         for i in datauji:
             cos_sim_arr.append(cos_sim(sample, i))    
         cos_sim_arr.sort(key=lambda tup:tup[1], reverse=True)
-        for i in cos_sim_arr:
-            print("Similarity:", round(i[1], 5))
-            img = cv2.imread(i[0])
-            cv2.imshow('image', img)
-            cv2.waitKey(0)
+        result = cos_sim_arr
+
     elif choice == '2' or choice == 'Cosine Similarity' or choice == 'cosine similarity':
         # METODE EUCLIDEAN DISTANCE
         euclidean_dist_arr = []
         for i in datauji:
             euclidean_dist_arr.append(euclidean_dist(sample, i))   
-        euclidean_dist_arr.sort(key=lambda tup:tup[1], reverse=False)
-        for i in euclidean_dist_arr:
-            print("Similarity:", 1-round(i[1], 5))
-            img = cv2.imread(i[0])
-            cv2.imshow('image', img)
-            cv2.waitKey(0)
+        euclidean_dist_arr.sort(key=lambda tup:tup[1])
+        result = euclidean_dist_arr
+    
+    for index, item in enumerate(result):
+        print("Similarity:", round(1-item[1], 5), item[0]) # PERLU DIGANTI 
+        img = cv2.imread(item[0])
+        cv2.imshow('image', img)
+        cv2.waitKey(0)
+        if index == T-1:
+            break
+
+    # for index, item in enumerate(result):
+    #     print("Similarity:", round(item[1], 5), item[0])
+    #     img = cv2.imread(item[0])
+    #     cv2.imshow('image', img)
+    #     cv2.waitKey(0)
+    #     if index == T-1:
+    #         break
