@@ -43,11 +43,11 @@ def eucledian_dist(sample, test_data):
     sample_vector = extract_features(sample)
     test_data_vector = extract_features(test_data)
     result_arr = []
-    for i in range(len(sample_vector))
-        result_arr[i] = sample_vector[i] - test_data_vector[i] 
+    for i in range(len(sample_vector)):
+        result_arr.append(sample_vector[i] - test_data_vector[i])
     vector_dist = norm(result_arr)
-
     return test_data, vector_dist
+
 
 def cos_sim(sample, test_data):
     sample_vector = extract_features(sample)
@@ -72,3 +72,16 @@ def main():
         cv2.imshow('image', img)
         cv2.waitKey(0)
     # print(cos_sim_arr)
+def main2():
+    datauji_path = 'datauji/'
+    datauji = [os.path.join(datauji_path, p) for p in sorted(os.listdir(datauji_path))]
+    eucledian_dist_arr = []
+    sample = os.path.join(datauji_path,"taylor swift4.jpg")
+    for i in datauji:
+        eucledian_dist_arr.append(eucledian_dist(sample, i))    
+    eucledian_dist_arr.sort(key=lambda tup:tup[1])
+    for i in eucledian_dist_arr:
+        print("Similarity:", 1-round(i[1], 5))
+        img = cv2.imread(i[0])
+        cv2.imshow('image', img)
+        cv2.waitKey(0)

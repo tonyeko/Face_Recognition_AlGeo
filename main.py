@@ -2,7 +2,7 @@
 import facerecog
 import os
 
-facerecog.main()
+facerecog.main2()
 
 # facerecog.printmenu()
 # sample.run()
