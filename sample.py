@@ -57,24 +57,40 @@ class Matcher(object):
             self.data = pickle.load(fp)
         self.names = []
         self.matrix = []
+        print(self.data.items())
         for k, v in self.data.items():
             self.names.append(k)
             self.matrix.append(v)
+        print(self.matrix)    
         self.matrix = np.array(self.matrix)
         self.names = np.array(self.names)
+        print('TIPPPPPPPPPPPPPPPPPPPPEEEEEEEEE', type(self.matrix))
 
     def cos_cdist(self, vector):
         # getting cosine distance between search image and images database
         v = vector.reshape(1, -1)
         return scipy.spatial.distance.cdist(self.matrix, v, 'cosine').reshape(-1)
 
+    def cos_sim(self, vector):
+	# Takes 2 vectors a, b and returns the cosine similarity according  to the definition of the dot product	
+        dot_product = np.dot(self, vector)
+        norm_self = np.linalg.norm(self)
+        norm_vector = np.linalg.norm(vector)
+        return dot_product / (norm_self * norm_vector)
+
     def match(self, image_path, topn=5):
         features = extract_features(image_path)
+        print(features); print("====================")
+        
         img_distances = self.cos_cdist(features)
+        print("Img Dist:", img_distances)
+        print("Similarity:", 1-img_distances)
         # getting top 5 records
         nearest_ids = np.argsort(img_distances)[:topn].tolist()
+        print(nearest_ids)
         nearest_img_paths = self.names[nearest_ids].tolist()
-
+        print(nearest_img_paths)
+        print(img_distances[nearest_ids].tolist())
         return nearest_img_paths, img_distances[nearest_ids].tolist()
 
 
@@ -96,7 +112,7 @@ def run():
     for s in sample:
         print ('Query image ==========================================')
         show_img(s)
-        names, match = ma.match(s, topn=3)
+        names, match = ma.match(s, topn=5)
         print ('Result images ========================================')
         for i in range(3):
             # we got cosine distance, less cosine distance between vectors
