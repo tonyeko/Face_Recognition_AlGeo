@@ -58,11 +58,11 @@ def cos_sim(sample, test_data):
 def main(choice, T, sample):
     datauji_path = 'datauji/'
     datauji = [os.path.join(datauji_path, p) for p in sorted(os.listdir(datauji_path))]
-    # sample = input("Masukkan nama file: ")
     sample = os.path.join(datauji_path, sample)
 
     if choice == '1' or choice == 'Jarak  Euclidean' or choice == 'jarak euclidean':
         # METODE COSINE SIMILARITY
+        method = 1
         cos_sim_arr = []
         for i in datauji:
             cos_sim_arr.append(cos_sim(sample, i))    
@@ -71,6 +71,7 @@ def main(choice, T, sample):
 
     elif choice == '2' or choice == 'Cosine Similarity' or choice == 'cosine similarity':
         # METODE EUCLIDEAN DISTANCE
+        method = 2
         euclidean_dist_arr = []
         for i in datauji:
             euclidean_dist_arr.append(euclidean_dist(sample, i))   
@@ -78,17 +79,11 @@ def main(choice, T, sample):
         result = euclidean_dist_arr
     
     for index, item in enumerate(result):
-        print("Similarity:", round(1-item[1], 5), item[0]) # PERLU DIGANTI 
+        if method == 1: similarity = round(item[1], 5)
+        else: similarity = round(1-(item[1]), 5) # PERLU DIGANTI 
+        print("Similarity:", similarity, item[0]) 
         img = cv2.imread(item[0])
         cv2.imshow('image', img)
         cv2.waitKey(0)
         if index == T-1:
             break
-
-    # for index, item in enumerate(result):
-    #     print("Similarity:", round(item[1], 5), item[0])
-    #     img = cv2.imread(item[0])
-    #     cv2.imshow('image', img)
-    #     cv2.waitKey(0)
-    #     if index == T-1:
-    #         break
