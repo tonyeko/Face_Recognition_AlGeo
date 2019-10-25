@@ -39,9 +39,15 @@ def norm(vector):
     norm = math.sqrt(sum(i**2 for i in vector))
     return norm
 
-# def eucledian_dist():
+def eucledian_dist(sample, test_data):
+    sample_vector = extract_features(sample)
+    test_data_vector = extract_features(test_data)
+    result_arr = []
+    for i in range(len(sample_vector))
+        result_arr[i] = sample_vector[i] - test_data_vector[i] 
+    vector_dist = norm(result_arr)
 
-#     return 
+    return test_data, vector_dist
 
 def cos_sim(sample, test_data):
     sample_vector = extract_features(sample)
