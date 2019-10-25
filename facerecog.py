@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 import scipy
-from scipy.misc import imread
 import _pickle as pickle
 import math
 import os
@@ -61,4 +60,9 @@ def main():
     for i in datauji:
         cos_sim_arr.append(cos_sim(sample, i))    
     cos_sim_arr.sort(key=lambda tup:tup[1], reverse=True)
-    print(cos_sim_arr)
+    for i in cos_sim_arr:
+        print("Similarity:", round(i[1], 5))
+        img = cv2.imread(i[0])
+        cv2.imshow('image', img)
+        cv2.waitKey(0)
+    # print(cos_sim_arr)

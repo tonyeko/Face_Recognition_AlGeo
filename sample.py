@@ -96,6 +96,7 @@ class Matcher(object):
 
 def show_img(path):
     img = cv2.imread(path)
+    print('PATHHHHHHHHHHHHHHHH: ', path)
     cv2.imshow('image', img)
     cv2.waitKey(0)
     
