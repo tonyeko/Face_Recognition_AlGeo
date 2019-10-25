@@ -38,11 +38,15 @@ def extract_features(image_path, vector_size=32):
 def norm(vector):
     return math.sqrt(sum(i**2 for i in vector))
 
-def eucledian_dist(sample, test_data):
+def euclidean_dist(sample, test_data):
     sample_vector = extract_features(sample)
     test_data_vector = extract_features(test_data)
-    eucdist = math.sqrt(sum((sample_vector[i] - test_data_vector[i])**2 for i in range(len(sample_vector))))
-    return test_data, eucdist
+    result_arr = []
+    for i in range(len(sample_vector)):
+        result_arr.append(sample_vector[i] - test_data_vector[i])
+    vector_dist = norm(result_arr)
+    return test_data, vector_dist
+
 
 def cos_sim(sample, test_data):
     sample_vector = extract_features(sample)
@@ -51,31 +55,30 @@ def cos_sim(sample, test_data):
     result = dotproduct/(norm(sample_vector)*norm(test_data_vector))
     return test_data, result
 
-def main():
+def main(choice):
     datauji_path = 'datauji/'
     datauji = [os.path.join(datauji_path, p) for p in sorted(os.listdir(datauji_path))]
     # sample = input("Masukkan nama file: ")
     sample = os.path.join(datauji_path,"taylor swift4.jpg")
-    
-    # METODE COSINE SIMILARITY
-    # cos_sim_arr = []
-    # for i in datauji:
-    #     cos_sim_arr.append(cos_sim(sample, i))    
-    # cos_sim_arr.sort(key=lambda tup:tup[1], reverse=True)
-    # for i in cos_sim_arr:
-    #     print("Similarity:", round(i[1], 5))
-    #     img = cv2.imread(i[0])
-    #     cv2.imshow('image', img)
-    #     cv2.waitKey(0)
-
-    # METODE EUCLIDEAN DISTANCE
-    euc_dist_arr = []
-    for i in datauji:
-        euc_dist_arr.append(eucledian_dist(sample, i))   
-    euc_dist_arr.sort(key=lambda tup:tup[1], reverse=False)
-    for i in euc_dist_arr:
-        print("Similarity:", round(i[1], 5))
-        img = cv2.imread(i[0])
-        cv2.imshow('image', img)
-        cv2.waitKey(0)
-    # print(cos_sim_arr)
+    if choice == '1' or choice == 'Jarak  Euclidean' or choice == 'jarak euclidean':
+        # METODE COSINE SIMILARITY
+        cos_sim_arr = []
+        for i in datauji:
+            cos_sim_arr.append(cos_sim(sample, i))    
+        cos_sim_arr.sort(key=lambda tup:tup[1], reverse=True)
+        for i in cos_sim_arr:
+            print("Similarity:", round(i[1], 5))
+            img = cv2.imread(i[0])
+            cv2.imshow('image', img)
+            cv2.waitKey(0)
+    elif choice == '2' or choice == 'Cosine Similarity' or choice == 'cosine similarity':
+        # METODE EUCLIDEAN DISTANCE
+        euclidean_dist_arr = []
+        for i in datauji:
+            euclidean_dist_arr.append(euclidean_dist(sample, i))   
+        euclidean_dist_arr.sort(key=lambda tup:tup[1], reverse=False)
+        for i in euclidean_dist_arr:
+            print("Similarity:", 1-round(i[1], 5))
+            img = cv2.imread(i[0])
+            cv2.imshow('image', img)
+            cv2.waitKey(0)

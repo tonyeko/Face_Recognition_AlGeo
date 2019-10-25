@@ -1,6 +1,6 @@
 import facerecog
 import os
 
-facerecog.main()
+facerecog.main('1')
 
 # facerecog.printmenu()
