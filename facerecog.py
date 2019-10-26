@@ -56,25 +56,23 @@ def cos_sim(sample, test_data):
     result = dotproduct/(norm(sample_vector)*norm(test_data_vector))
     return test_data, result
 
-def main(choice, T, sample):
+def main(method, T, sample):
     # T = int(T.get())
     # sample = str(sample.get())
     datauji_path = 'datauji/'
     datauji = [os.path.join(datauji_path, p) for p in sorted(os.listdir(datauji_path))]
     sample = os.path.join(datauji_path, sample)
 
-    if choice == '1' or choice == 'Jarak  Euclidean' or choice == 'jarak euclidean':
+    if method == 1:
         # METODE COSINE SIMILARITY
-        method = 1
         cos_sim_arr = []
         for i in datauji:
             cos_sim_arr.append(cos_sim(sample, i))    
         cos_sim_arr.sort(key=lambda tup:tup[1], reverse=True)
         result = cos_sim_arr
 
-    elif choice == '2' or choice == 'Cosine Similarity' or choice == 'cosine similarity':
+    elif method == 2:
         # METODE EUCLIDEAN DISTANCE
-        method = 2
         euclidean_dist_arr = []
         for i in datauji:
             euclidean_dist_arr.append(euclidean_dist(sample, i))   
@@ -89,4 +87,5 @@ def main(choice, T, sample):
         cv2.imshow('image', img)
         cv2.waitKey(0)
         if index == T-1:
+            cv2.destroyAllWindows()
             break
