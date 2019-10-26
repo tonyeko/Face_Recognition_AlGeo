@@ -4,6 +4,7 @@ import scipy
 import _pickle as pickle
 import math
 import os
+import tkinter
 
 # Feature extractor
 def extract_features(image_path, vector_size=32):
@@ -56,6 +57,8 @@ def cos_sim(sample, test_data):
     return test_data, result
 
 def main(choice, T, sample):
+    # T = int(T.get())
+    # sample = str(sample.get())
     datauji_path = 'datauji/'
     datauji = [os.path.join(datauji_path, p) for p in sorted(os.listdir(datauji_path))]
     sample = os.path.join(datauji_path, sample)
