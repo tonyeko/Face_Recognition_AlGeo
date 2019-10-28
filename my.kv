@@ -1,0 +1,42 @@
+<MyGrid>
+
+    name1: name
+    jumlah1: jumlah
+    GridLayout:
+        cols:1
+        size: root.width-200, root.height-200
+        pos : 100,100
+
+        Label:
+            text: " Selamat datang di Aplikasi Face Recognition!!! "
+
+        GridLayout:
+            cols:2
+
+            Label:
+                text: "Nama Foto yang dicocokan: "
+
+            TextInput:
+                id: name
+                multiline : False
+            
+            Label:
+                text: "Berapa foto teratas? "
+
+            TextInput:
+                id: jumlah
+                multiline : False
+            
+        Label:
+            text: "Pilih metode :) "
+        GridLayout:
+            cols:2
+            Button:
+                text:"Cosinus Dist"
+                on_press:root.btn()
+            Button:
+                text:"Eucledian"
+                on_press:root.btn2()
+        
+
+        

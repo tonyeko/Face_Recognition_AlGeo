@@ -5,6 +5,7 @@ import _pickle as pickle
 import math
 import os
 import tkinter
+from annoy import AnnoyIndex
 
 import timeit
 
@@ -48,34 +49,22 @@ def extract_features(image_path, vector_size=32):
 #     return sparse_vec
 
 def dotproduct(v1, v2):
-    if len(v1) >= len(v2): length = len(v2)
-    else: length = len(v1)
-    return sum(v1[i] * v2[i] for i in range(length))
-    # return sum((x1 * x2) for x1, x2 in zip(v1, v2))
+    # if len(v1) >= len(v2): length = len(v2)
+    # else: length = len(v1)
+    # return sum(v1[i] * v2[i] for i in range(length))
+    return sum((x1 * x2) for x1, x2 in zip(v1, v2))
 
 def norm(vector):
-    return math.sqrt(sum(i**2 for i in vector))
-    # return math.sqrt(dotproduct(vector, vector))
-
-def unitvector(vector):
-    return vector/norm(vector)
+    # return math.sqrt(sum(i**2 for i in vector))
+    return math.sqrt(dotproduct(vector, vector))
 
 def euclidean_dist(sample_vector, test_data):
-    # CARA 1
-    # test_data_vector = extract_features(test_data)
-    # vector_dist = norm(sample_vector - test_data_vector)
-
-    # CARA 2
-    # result_arr = []
-    # for i in range(len(sample_vector)):
-    #     result_arr.append(sample_vector[i] - test_data_vector[i])
-    # vector_dist = norm(result_arr)
-
-    # CARA 3
-    cos_val = cos_sim(sample_vector, test_data)
-    vector_dist = 2-(2*cos_val[1])
+    test_data_vector = extract_features(test_data)
+    result_arr = []
+    for i in range(len(sample_vector)):
+        result_arr.append(sample_vector[i] - test_data_vector[i])
+    vector_dist = norm(result_arr)
     return test_data, vector_dist
-    
 
 def cos_sim(sample_vector, test_data):
     test_data_vector = extract_features(test_data)
@@ -91,32 +80,47 @@ def main(method, T, sample):
     sample = os.path.join(datauji_path, sample)
     sample_vec = extract_features(sample)
 
-    if method == 1:
-        # METODE COSINE SIMILARITY
-        cos_sim_arr = []
-        for i in datauji:
-            cos_sim_arr.append(cos_sim(sample_vec, i))    
-        cos_sim_arr.sort(key=lambda tup:tup[1], reverse=True)
-        result = cos_sim_arr
+    # if method == 1:
+    #     # METODE COSINE SIMILARITY
+    #     cos_sim_arr = AnnoyIndex(2, 'euclidean')
+    #     for i in range (len(datauji)):
+    #         v = cos_sim(sample_vec, datauji[i])
+    #         cos_sim_arr.add_item(i, v)    
+    #     cos_sim_arr.sort(key=lambda tup:tup[1], reverse=True)
+    #     result = cos_sim_arr
 
-    elif method == 2:
-        # METODE EUCLIDEAN DISTANCE
-        euclidean_dist_arr = []
-        for i in datauji:
-            euclidean_dist_arr.append(euclidean_dist(sample_vec, i))   
-        euclidean_dist_arr.sort(key=lambda tup:tup[1])
-        result = euclidean_dist_arr
+    # elif method == 2:
+    #     # METODE EUCLIDEAN DISTANCE
+    #     euclidean_dist_arr = []
+    #     for i in datauji:
+    #         euclidean_dist_arr.append(euclidean_dist(sample_vec, i))   
+    #     euclidean_dist_arr.sort(key=lambda tup:tup[1])
+    #     result = euclidean_dist_arr
+    test_data_arr = AnnoyIndex(2048, 'euclidean')
+    test_data_arr.add_item(0, sample_vec)
+    for i in range (1, len(datauji)):
+        test_data_arr.add_item(i, extract_features(datauji[i]))
+    test_data_arr.build(10000)
+    result = test_data_arr.get_nns_by_item(0,9)
 
     stop = timeit.default_timer()
-    print('Time: ', stop - start)  
-  
-    for index, item in enumerate(result):
-        if method == 1: similarity = round(item[1], 5)
-        else: similarity = round(1-(item[1]), 5) # PERLU DIGANTI 
-        print("Similarity:", similarity, item[0]) 
-        img = cv2.imread(item[0])
+    print('Time: ', stop - start)
+    print(result)
+    for i in result:
+        print(datauji[i])
+        img = cv2.imread(datauji[i])
         cv2.imshow('image', img)
         cv2.waitKey(0)
-        if index == T-1:
-            cv2.destroyAllWindows()
-            break
+        cv2.destroyAllWindows()
+  
+  
+    # for index, item in enumerate(result):
+    #     if method == 1: similarity = round(item[1], 5)
+    #     else: similarity = round(1-(item[1]), 5) # PERLU DIGANTI 
+    #     print("Similarity:", similarity, item[0]) 
+    #     img = cv2.imread(item[0])
+    #     cv2.imshow('image', img)
+    #     cv2.waitKey(0)
+    #     if index == T-1:
+    #         cv2.destroyAllWindows()
+    #         break
