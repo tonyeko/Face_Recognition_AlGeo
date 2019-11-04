@@ -38,6 +38,48 @@ def extract_features(image_path, vector_size=32):
 
     return dsc
 
+def batch_extractor(images_path, pickled_db_path="features.pck"):
+    files = [os.path.join(images_path, p) for p in sorted(os.listdir(images_path))]
+
+    result = {}
+    for f in files:
+        print ('Extracting features from image %s' % f)
+        name = f.split('/')[-1].lower()
+        result[name] = extract_features(f)
+    
+    # saving all our feature vectors in pickled file
+    with open(pickled_db_path, 'wb') as fp:
+        pickle.dump(result, fp)
+
+class Matcher(object):
+    def __init__(self, pickled_db_path="features.pck"):
+        with open(pickled_db_path, 'rb') as fp:
+            self.data = pickle.load(fp)
+        self.names = []
+        self.matrix = []
+        print(self.data.items())
+        for k, v in self.data.items():
+            self.names.append(k)
+            self.matrix.append(v)
+        print(self.matrix)    
+        self.matrix = np.array(self.matrix)
+        self.names = np.array(self.names)
+
+    def match(self, image_path, topn=5):
+        features = extract_features(image_path)
+        print(features); print("====================")
+        
+        img_distances = self.cos_cdist(features)
+        print("Img Dist:", img_distances)
+        print("Similarity:", 1-img_distances)
+        # getting top 5 records
+        nearest_ids = np.argsort(img_distances)[:topn].tolist()
+        print(nearest_ids)
+        nearest_img_paths = self.names[nearest_ids].tolist()
+        print(nearest_img_paths)
+        print(img_distances[nearest_ids].tolist())
+        return nearest_img_paths, img_distances[nearest_ids].tolist()
+
 # def sparse_vector(dense_vec):
 #     sparse_vec = {“id”: [], “values”: []}
 #     d = len(dense_vec)

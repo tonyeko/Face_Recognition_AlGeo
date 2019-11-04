@@ -1,8 +1,8 @@
-import facerecog
+import samplefacerecog
 import tkinter
 
 def runfacerecog():
-    facerecog.main(choice.get(), T.get(), sample.get())
+    samplefacerecog.main(choice.get(), T.get(), sample.get())
     return
 
 window = tkinter.Tk()
