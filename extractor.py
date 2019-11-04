@@ -1,6 +1,7 @@
 import cv2
 import os
 import _pickle as pickle
+import numpy as np
 
 # Feature extractor
 def extract_features(image_path, vector_size=32):

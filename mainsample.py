@@ -1,30 +1,42 @@
 import samplefacerecog
-import tkinter
+import os
+from tkinter import *
+from tkinter.filedialog import askopenfilename
+
+window = Tk()
+window.title("Face Recognition by UNITY")
 
 def runfacerecog():
+    print(sample.get())
     samplefacerecog.main(choice.get(), T.get(), sample.get())
     return
 
-window = tkinter.Tk()
-window.title("Face Recognition")
+def open_dialog():
+    path = askopenfilename(initialdir = "datauji/", title = "Select file", filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+    name = os.path.basename(path)
+    filename.delete(0, END)
+    filename.insert(0, name)
+    sample = name
 
-sample = tkinter.StringVar()
-T = tkinter.IntVar()
-choice = tkinter.IntVar()
+sample = StringVar()
+T = IntVar()
+choice = IntVar()
 
-tkinter.Label(window, text = "Nama File Sample: ").grid(row = 0, column = 0, padx = 0, pady = 10) # this is placed in 0 0
+filelabel = Label(window, text = "Nama File Sample: ").grid(row = 0, column = 0, padx = 0, pady = 10) # this is placed in 0 0
 # 'Entry' is used to display the input-field
-tkinter.Entry(window, textvariable = sample).grid(row = 0, column = 1) # this is placed in 0 1
-# sample = sample.get()
+filename = Entry(window, textvariable = sample)
+filename.grid(row = 0, column = 1) # this is placed in 0 1
+button = Button(window, text="Browse File", command=open_dialog)
+button.grid(row = 0, column = 2, padx = 10)
 
-tkinter.Label(window, text = "T").grid(row = 1, column = 0, padx = 0, pady = 10) # this is placed in 1 0
-tkinter.Entry(window, textvariable = T).grid(row = 1, column = 1) # this is placed in 1 1
-# T = T.get()
+Label(window, text = "T").grid(row = 1, column = 0, padx = 0, pady = 10) # this is placed in 1 0
+Entry(window, textvariable = T).grid(row = 1, column = 1) # this is placed in 1 1
 
-tkinter.Radiobutton(window, text="Cosine Similarity", padx = 20, variable=choice, value=1).grid(row = 2, column = 0)
-tkinter.Radiobutton(window, text="Euclidean Distance", padx = 20, variable=choice, value=2).grid(row = 2, column = 1)
+Label(window, text = "Metode: ").grid(row = 2, column = 0, padx = 0, pady = 10) # this is placed in 1 0
+Radiobutton(window, text="Cosine Similarity", padx = 20, variable=choice, value=1).grid(row = 2, column = 1)
+Radiobutton(window, text="Euclidean Distance", padx = 20, variable=choice, value=2).grid(row = 2, column = 2)
 
-btn = tkinter.Button(window, text = 'Run', command = runfacerecog).grid(row = 3, column = 1)
+btn = Button(window, text = 'Run', command = runfacerecog).grid(row = 3, column = 1)
 
 window.mainloop()
 

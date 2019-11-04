@@ -64,7 +64,7 @@ def main(method, T, sample):
     datauji_path = 'datauji/'
     files = [os.path.join(datauji_path, p) for p in sorted(os.listdir(datauji_path))]
     
-    extractor.batch_extractor(datauji_path)
+    # extractor.batch_extractor(datauji_path)
     
     datauji = Matcher('datauji.pck')
     
