@@ -39,5 +39,4 @@ btn = Button(window, text = 'Run', command = runfacerecog).grid(row = 3, column 
 
 window.mainloop()
 
-# T = 10
 # sample = "Aaron Paul124_221.jpg"
