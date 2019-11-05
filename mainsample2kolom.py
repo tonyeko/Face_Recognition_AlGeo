@@ -26,16 +26,16 @@ filelabel = Label(window, text = "Nama File Sample: ").grid(row = 0, column = 0,
 filename = Entry(window, textvariable = sample)
 filename.grid(row = 0, column = 1) # this is placed in 0 1
 button = Button(window, text="Browse File", command=open_dialog)
-button.grid(row = 0, column = 2, padx = 10)
+button.grid(row = 1, column = 1, padx = 10)
 
-Label(window, text = "T").grid(row = 1, column = 0, padx = 0, pady = 10) # this is placed in 1 0
-Entry(window, textvariable = T).grid(row = 1, column = 1) # this is placed in 1 1
+Label(window, text = "T").grid(row = 2, column = 0, padx = 0, pady = 10) # this is placed in 1 0
+Entry(window, textvariable = T).grid(row = 2, column = 1, side=RIGHT) # this is placed in 1 1
 
-Label(window, text = "Metode: ").grid(row = 2, column = 0, padx = 0, pady = 10) # this is placed in 1 0
-Radiobutton(window, text="Cosine Similarity", padx = 20, variable=choice, value=1).grid(row = 2, column = 1)
-Radiobutton(window, text="Euclidean Distance", padx = 20, variable=choice, value=2).grid(row = 2, column = 2)
+Label(window, text = "Metode: ").grid(row = 3, column = 0, padx = 0, pady = 10) # this is placed in 1 0
+Radiobutton(window, text="Cosine Similarity", padx = 20, variable=choice, value=1).grid(row = 3, column = 1)
+Radiobutton(window, text="Euclidean Distance", padx = 20, variable=choice, value=2).grid(row = 4, column = 1)
 
-btn = Button(window, text = 'Run', command = runfacerecog).grid(row = 3, column = 1)
+btn = Button(window, text = 'Run', command = runfacerecog).grid(row = 5, column = 1)
 
 window.mainloop()
 

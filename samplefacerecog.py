@@ -2,9 +2,13 @@ import cv2
 import numpy as np
 import scipy
 import _pickle as pickle
-import os
+import os   
 import math
 import extractor
+from functools import partial
+from tkinter import *
+
+from PIL import ImageTk, Image
 
 def dotproduct(v1, v2):
     # if len(v1) >= len(v2): length = len(v2)
@@ -55,10 +59,40 @@ class Matcher(object):
         nearest_img_paths = self.names[nearest_ids].tolist()
         return nearest_img_paths, topn_result
 
-def show_img(path):
+def next(subwindow):
+    subwindow.quit()
+    subwindow.update()
+
+def show_img(path, similarity):
     img = cv2.imread(path)
-    cv2.imshow('image', img)
-    cv2.waitKey(0)
+    # # cv2.imshow('image', img)
+    # # cv2.waitKey(0)
+
+    b,g,r = cv2.split(img)
+    img = cv2.merge((r,g,b))
+    # A root window for displaying objects
+    subwindow = Toplevel()
+    subwindow.title("Result")
+    name = os.path.basename(path)
+    Label(subwindow, text=name).pack()
+    
+    sim = StringVar()
+    string = "Similarity: "+ str(similarity) 
+    sim.set(string)
+    if (similarity != -9999) :
+        Label(subwindow, textvariable=sim).pack()
+    
+
+    # Convert the Image object into a TkPhoto object
+    im = Image.fromarray(img)
+    imgtk = ImageTk.PhotoImage(image=im) 
+
+    # Put it in the display window
+    Label(subwindow, image=imgtk).pack() 
+    Button(subwindow, text="Next", command=partial(next, subwindow)).pack()
+    # subwindow.destroy()
+    subwindow.mainloop() # Start the GUI
+    
     
 def main(method, T, sample):
     datauji_path = 'datauji/'
@@ -71,14 +105,14 @@ def main(method, T, sample):
     print ('Query image ==========================================')
     print(sample)
     sample = os.path.join(datauji_path, sample)
-    show_img(sample)
+    show_img(sample, -9999)
     names, match = datauji.match(sample, method, topn=T)
     print ('Result images ========================================')
-    for i in range(len(names)):
+    for i in range(T):
         if method == 1: similarity = round(match[i], 5)
         else: similarity = round(1-(match[i]), 5) # PERLU DIGANTI 
         print("Similarity:", similarity, names[i]) 
-        show_img(os.path.join(datauji_path, names[i]))
-        if i == T-1:
-            cv2.destroyAllWindows()
-            break
+        show_img(os.path.join(datauji_path, names[i]), similarity)
+        # if i == T-1:
+        #     cv2.destroyAllWindows()
+        #     break
