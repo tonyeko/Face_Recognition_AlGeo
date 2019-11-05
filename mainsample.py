@@ -3,6 +3,7 @@ import os
 from header import *
 from tkinter import *
 from tkinter.filedialog import askopenfilename
+from PIL import ImageTk, Image
 
 def runfacerecog():
     samplefacerecog.main(choice.get(), T.get(), sample.get())
@@ -17,6 +18,10 @@ def open_dialog():
 
 window = Tk()
 window.title("Face Recognition by UNITY")
+
+backgroundfile = ImageTk.PhotoImage(file = "background_image3.jpg")
+background_label = Label(window, image=backgroundfile)
+background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
 sample = StringVar()
 T = IntVar()
