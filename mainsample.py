@@ -1,13 +1,15 @@
 import samplefacerecog
 import os
+import imgshow
 from header import *
 from tkinter import *
 from tkinter.filedialog import askopenfilename
 from PIL import ImageTk, Image
 
 def runfacerecog():
+    imgshow.show_sample_img(os.path.join('datauji/', sample.get()), window)
     samplefacerecog.main(choice.get(), T.get(), sample.get())
-    return
+    return    
 
 def open_dialog():
     path = askopenfilename(initialdir = "datauji/", title = "Select file", filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
@@ -17,30 +19,30 @@ def open_dialog():
     sample = name
 
 window = Tk()
+# Add title and icon
 window.iconbitmap("facerecog.ico")
 window.title("Face Recognition by UNITY")
-
-backgroundfile = ImageTk.PhotoImage(file = "background_image3.jpg")
+# Add background image
+backgroundfile = ImageTk.PhotoImage(file = "background_image.jpg")
 background_label = Label(window, image=backgroundfile)
 background_label.place(x=0, y=0, relwidth=1, relheight=1)
-
+# Tkinter Variable Declaration
 sample = StringVar()
 T = IntVar()
 choice = IntVar()
-
+# Show Header
 header()
 
-filelabel = Label(window, text = "Nama File Sample: ").grid(row = 14, column = 2, padx = 0, pady = 10) # this is placed in 0 0
-# 'Entry' is used to display the input-field
+filelabel = Label(window, text = "Nama File Sample: ").grid(row = 14, column = 2, padx = 0, pady = 10)
 filename = Entry(window, textvariable = sample)
-filename.grid(row = 14, column = 3, columnspan = 2) # this is placed in 0 1
+filename.grid(row = 14, column = 3, columnspan = 2)
 button = Button(window, text="Browse File", command=open_dialog)
 button.grid(row = 14, column = 5, padx = 10)
 
-Label(window, text = "Banyaknya wajah yang cocok: ").grid(row = 15, column = 2, padx = 0, pady = 10) # this is placed in 1 0
-Entry(window, textvariable = T).grid(row = 15, column = 3, columnspan = 2) # this is placed in 1 1
+Label(window, text = "Banyaknya wajah yang cocok: ").grid(row = 15, column = 2, padx = 0, pady = 10) 
+Entry(window, textvariable = T).grid(row = 15, column = 3, columnspan = 2) 
 
-Label(window, text = "Metode: ").grid(row = 17, column = 2, padx = 0, pady = 10) # this is placed in 1 0
+Label(window, text = "Metode: ").grid(row = 17, column = 2, padx = 0, pady = 10) 
 Radiobutton(window, text="Cosine Similarity", padx = 20, variable=choice, value=1).grid(row = 17, column = 4)
 Radiobutton(window, text="Euclidean Distance", padx = 20, variable=choice, value=2).grid(row = 17, column = 5)
 Label(window).grid(pady = 7)
