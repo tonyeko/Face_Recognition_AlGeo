@@ -16,6 +16,7 @@ def show_img(path, similarity, index):
     img = cv2.merge((r,g,b))
     # A root window for displaying objects
     subwindow = Toplevel()
+    subwindow.focus()
     if (index != -9999):
         i = StringVar()
         i = "Gambar ke-"+str(index)
@@ -39,5 +40,7 @@ def show_img(path, similarity, index):
 
     # Put it in the display window
     Label(subwindow, image=imgtk).pack() 
+    # Bind Enter key with Next
+    subwindow.bind("<Return>", (lambda event: next(subwindow)))
     Button(subwindow, text="Next", command=partial(next, subwindow)).pack()
     subwindow.mainloop()

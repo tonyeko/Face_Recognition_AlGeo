@@ -17,6 +17,7 @@ def open_dialog():
     sample = name
 
 window = Tk()
+window.iconbitmap("facerecog.ico")
 window.title("Face Recognition by UNITY")
 
 backgroundfile = ImageTk.PhotoImage(file = "background_image3.jpg")
