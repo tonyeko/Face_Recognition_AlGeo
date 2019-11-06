@@ -58,5 +58,7 @@ def show_img(path, similarity, index, method):
     Label(subwindow, image=imgtk).pack() 
     # Bind Enter key with Next
     subwindow.bind("<Return>", (lambda event: next(subwindow)))
+    # Bind Right key with Next
+    subwindow.bind("<Right>", (lambda event: next(subwindow)))
     Button(subwindow, text="Next", command=partial(next, subwindow)).pack()
     subwindow.mainloop()
