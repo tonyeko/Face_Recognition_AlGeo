@@ -22,7 +22,7 @@ def show_sample_img(path, window):
     imglabel = Label(window, image=imgtk)
     imglabel.image = imgtk  # keep a reference to the Tkinter object
     imglabel.grid(row = 15, column = 6, rowspan = 7)
-    Label(window).grid(pady = 7)
+    Label(window).grid(pady = 3)
     
 def show_img(path, similarity, index, method):
     img = cv2.imread(path)
@@ -34,12 +34,9 @@ def show_img(path, similarity, index, method):
 
     # set focus to subwindow
     subwindow.focus()
-    # if (index != -9999):
     i = StringVar()
     i = "Gambar ke-"+str(index)
     subwindow.title(i)
-    # else :
-    #     subwindow.title("Gambar Sample")
 
     name = StringVar()
     name = "File Name:      " + os.path.basename(path)
@@ -51,7 +48,6 @@ def show_img(path, similarity, index, method):
     else:
         string = "Distance: "+ str(similarity) 
     sim.set(string)
-    # if (similarity != -9999) :
     Label(subwindow, textvariable=sim).pack()
     
     # Convert the Image object into a TkPhoto object
