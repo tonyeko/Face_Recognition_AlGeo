@@ -2,8 +2,19 @@
 __pycache__/
 referensi/
 *.py[cod]
+<<<<<<< HEAD
 *$py.class
+=======
+*.pyc
+>>>>>>> 87124d9... Add gitignore: .pck
 main2.py
 eucdist.py
 cobabutton.py
 datauji/
+<<<<<<< HEAD
+=======
+database/
+data.zip
+datauji.pck
+database.pck
+>>>>>>> 87124d9... Add gitignore: .pck
