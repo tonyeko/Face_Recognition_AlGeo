@@ -1,4 +1,4 @@
-import samplefacerecog
+import facerecog
 import os
 import imgshow
 from header import *
@@ -8,7 +8,7 @@ from PIL import ImageTk, Image
 
 def runfacerecog():
     imgshow.show_sample_img(os.path.join('datauji/', sample.get()), window)
-    samplefacerecog.main(choice.get(), T.get(), sample.get())
+    facerecog.main(choice.get(), T.get(), sample.get())
     return    
 
 def open_dialog():
@@ -22,6 +22,7 @@ window = Tk()
 # Add title and icon
 window.iconbitmap("facerecog.ico")
 window.title("Face Recognition by UNITY")
+window.geometry('+500+100')
 # Add background image
 backgroundfile = ImageTk.PhotoImage(file = "background_image.jpg")
 background_label = Label(window, image=backgroundfile)
@@ -49,3 +50,4 @@ Label(window).grid(pady = 7)
 btn = Button(window, text = 'Run', command = runfacerecog, height = 1, width = 8).grid(row = 18, column = 4)
 
 window.mainloop()
+print('Terima kasih telah menggunakan program ini.')

@@ -55,16 +55,13 @@ def main(method, T, sample):
     datauji_path = 'datauji'
     files = [os.path.join(database_path, p) for p in sorted(os.listdir(database_path))]
     
-    # extractor.batch_extractor(datauji_path)
-    
     database = Matcher('database.pck')
     
-    print ('Query image ==========================================')
+    print ('Sample image:', end=" ")
     print(sample)
     sample = os.path.join(datauji_path, sample)
-    show_img(sample, -9999, -9999, method)
     names, match = database.match(sample, method, topn=T)
-    print ('Result images ========================================')
+    print ('Database images:')
     for i in range(T):
         similarity = round(match[i], 5)
         if method == 1: 

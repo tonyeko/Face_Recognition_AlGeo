@@ -30,14 +30,16 @@ def show_img(path, similarity, index, method):
     img = cv2.merge((r,g,b))
     # A root window for displaying objects
     subwindow = Toplevel()
+    subwindow.geometry('+800+480')
+
     # set focus to subwindow
     subwindow.focus()
-    if (index != -9999):
-        i = StringVar()
-        i = "Gambar ke-"+str(index)
-        subwindow.title(i)
-    else :
-        subwindow.title("Gambar Sample")
+    # if (index != -9999):
+    i = StringVar()
+    i = "Gambar ke-"+str(index)
+    subwindow.title(i)
+    # else :
+    #     subwindow.title("Gambar Sample")
 
     name = StringVar()
     name = "File Name:      " + os.path.basename(path)
@@ -49,8 +51,8 @@ def show_img(path, similarity, index, method):
     else:
         string = "Distance: "+ str(similarity) 
     sim.set(string)
-    if (similarity != -9999) :
-        Label(subwindow, textvariable=sim).pack()
+    # if (similarity != -9999) :
+    Label(subwindow, textvariable=sim).pack()
     
     # Convert the Image object into a TkPhoto object
     im = Image.fromarray(img)
