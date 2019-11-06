@@ -30,6 +30,7 @@ background_label.place(x=0, y=0, relwidth=1, relheight=1)
 # Tkinter Variable Declaration
 sample = StringVar()
 T = IntVar()
+T.set(10) # set default value 
 choice = IntVar()
 # Show Header
 header()
