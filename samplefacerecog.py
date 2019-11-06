@@ -6,13 +6,9 @@ import extractor
 from imgshow import *
 
 def dotproduct(v1, v2):
-    # if len(v1) >= len(v2): length = len(v2)
-    # else: length = len(v1)
-    # return sum(v1[i] * v2[i] for i in range(length))
-    return sum((x1 * x2) for x1, x2 in zip(v1, v2))
+    return np.dot(v1, v2)
 
 def norm(vector):
-    # return math.sqrt(sum(i**2 for i in vector))
     return math.sqrt(dotproduct(vector, vector))
 
 def unitvector(vector):
@@ -23,7 +19,7 @@ def euclidean_dist(sample_vector, test_data_vector):
     return vector_dist
     
 def cos_sim(sample_vector, test_data_vector):
-    cos_value = dotproduct(sample_vector, test_data_vector)/(norm(sample_vector)*norm(test_data_vector))
+    cos_value = dotproduct(sample_vector/norm(sample_vector), test_data_vector/norm(test_data_vector))
     return cos_value
 
 class Matcher(object):
@@ -55,21 +51,25 @@ class Matcher(object):
         return nearest_img_paths, topn_result
 
 def main(method, T, sample):
-    datauji_path = 'datauji/'
-    files = [os.path.join(datauji_path, p) for p in sorted(os.listdir(datauji_path))]
+    database_path = 'database/'
+    datauji_path = 'datauji'
+    files = [os.path.join(database_path, p) for p in sorted(os.listdir(database_path))]
     
     # extractor.batch_extractor(datauji_path)
     
-    datauji = Matcher('datauji.pck')
+    database = Matcher('database.pck')
     
     print ('Query image ==========================================')
     print(sample)
     sample = os.path.join(datauji_path, sample)
-    show_img(sample, -9999, -9999)
-    names, match = datauji.match(sample, method, topn=T)
+    show_img(sample, -9999, -9999, method)
+    names, match = database.match(sample, method, topn=T)
     print ('Result images ========================================')
     for i in range(T):
-        if method == 1: similarity = round(match[i], 5)
-        else: similarity = round(1-(match[i]), 5) # PERLU DIGANTI 
-        print("Similarity:", similarity, names[i]) 
-        show_img(os.path.join(datauji_path, names[i]), similarity, i+1)
+        similarity = round(match[i], 5)
+        if method == 1: 
+            print("Similarity:", similarity, names[i]) 
+        else: 
+            print("Distance:", similarity, names[i]) 
+        
+        show_img(os.path.join(database_path, names[i]), similarity, i+1, method)

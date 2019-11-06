@@ -33,7 +33,7 @@ def extract_features(image_path, vector_size=32):
 
     return dsc
 
-def batch_extractor(images_path, pickled_db_path="datauji.pck"):
+def batch_extractor(images_path, pickled_db_path="database.pck"):
     files = [os.path.join(images_path, p) for p in sorted(os.listdir(images_path))]
 
     result = {}
@@ -45,3 +45,8 @@ def batch_extractor(images_path, pickled_db_path="datauji.pck"):
     # saving all our feature vectors in pickled file
     with open(pickled_db_path, 'wb') as fp:
         pickle.dump(result, fp)
+
+
+# Extract: 
+# batch_extractor('datauji/')
+# batch_extractor('database/')

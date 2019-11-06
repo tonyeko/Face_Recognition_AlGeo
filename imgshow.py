@@ -22,8 +22,9 @@ def show_sample_img(path, window):
     imglabel = Label(window, image=imgtk)
     imglabel.image = imgtk  # keep a reference to the Tkinter object
     imglabel.grid(row = 15, column = 6, rowspan = 7)
+    Label(window).grid(pady = 7)
     
-def show_img(path, similarity, index):
+def show_img(path, similarity, index, method):
     img = cv2.imread(path)
     b,g,r = cv2.split(img)
     img = cv2.merge((r,g,b))
@@ -43,7 +44,10 @@ def show_img(path, similarity, index):
     Label(subwindow, text=name).pack()
     
     sim = StringVar()
-    string = "Similarity: "+ str(similarity) 
+    if method == 1:
+        string = "Similarity: "+ str(similarity) 
+    else:
+        string = "Distance: "+ str(similarity) 
     sim.set(string)
     if (similarity != -9999) :
         Label(subwindow, textvariable=sim).pack()
