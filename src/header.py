@@ -47,16 +47,16 @@ def help_txt(self):
   '----------------'  '----------------'  '----------------'  '----------------'  '----------------' 
 
     By: Kelompok UNITY
-    Tony Eko Yuwono 13518030
-    Tifany Angelia 13518067
-    Rifaldy Aristya Kelana 13518082
+    Tony Eko Yuwono           13518030
+    Tifany Angelia            13518067
+    Rifaldy Aristya Kelana    13518082
 
     Cara menggunakan program ini:
     1. Masukkan nama file foto yang ingin diuji
           - Masukan dapat diinput secara manual 
           - Masukan dapat dipilih dengan menekan tombol "Browse File"
     2. Masukkan banyak foto termirip yang diinginkan
-    3. Pilih yang diinginkan:
+    3. Pilih metode yang diinginkan:
           - Cosine Similarity
           - Euclidean Distance
     4. Tekan Tombol "Run"
