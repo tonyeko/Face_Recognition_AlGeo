@@ -54,9 +54,7 @@ def main(method, T, sample):
     database_path = '../test/database'
     datauji_path = '../test/datauji'
     files = [os.path.join(database_path, p) for p in sorted(os.listdir(database_path))]
-    
     database = Matcher('../test/database.pck')
-    
     print ('Sample image:', end=" ")
     print(sample)
     sample = os.path.join(datauji_path, sample)

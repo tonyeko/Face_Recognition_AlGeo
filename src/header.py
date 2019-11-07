@@ -26,9 +26,7 @@ def header(self):
 
     style = ttk.Style()
     style.configure('Style.TButton', font='TkFixedFont')
-
     label = ttk.Label(self, text=text1, style='Style.TButton')
-
     label.grid(row = 0, column = 0, columnspan = 10, padx = 0, pady = 10)
 
 def help_txt(self):
@@ -63,7 +61,5 @@ def help_txt(self):
     """
       style = ttk.Style()
       style.configure('Style.TButton', font='TkFixedFont')
-
       label = ttk.Label(self, text=help, style='Style.TButton')
-
       label.grid(row = 2, column = 0, columnspan = 10, padx = 20, pady = 10)

@@ -82,6 +82,7 @@ class MainPage(tk.Frame) :
             filename.delete(0, END)
             filename.insert(0, name)
             sample = name
+            
         # Choose Sample Photo
         filelabel = Label(self, text = "Nama File Sample: ").grid(row = 14, column = 2, padx = 0, pady = 10)
         filename = Entry(self, textvariable = sample)
@@ -112,12 +113,6 @@ class HelpPage(tk.Frame) :
         button2.grid(row=0, column=9, pady=5)
         # Show Help Text
         help_txt(self)
-
-        def runfacerecog2(a,b,c):
-            imgshow.show_sample_img(os.path.join('../test/datauji/', c), self)
-            facerecog.main(a, b, c)
-            return    
-
 
 app = Master()
 app.mainloop()
