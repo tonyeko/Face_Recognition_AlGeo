@@ -4,6 +4,22 @@ from tkinter import *
 from PIL import ImageTk, Image
 from functools import partial
 
+def loading_background_img(self):
+    # Add background image
+    im = Image.open("img/loading-background.gif")
+    backgroundfile = ImageTk.PhotoImage(im)
+    background_label = Label(self, image=backgroundfile)
+    background_label.image = backgroundfile
+    background_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+def background_img(self):
+    # Add background image
+    im = Image.open("img/background_image.jpg")
+    backgroundfile = ImageTk.PhotoImage(im)
+    background_label = Label(self, image=backgroundfile)
+    background_label.image = backgroundfile
+    background_label.place(x=0, y=0, relwidth=1, relheight=1)
+
 def next(subwindow):
     # Hide/Unvisible
     subwindow.withdraw()
@@ -58,5 +74,7 @@ def show_img(path, similarity, index, method):
     Label(subwindow, image=imgtk).pack() 
     # Bind Enter key with Next
     subwindow.bind("<Return>", (lambda event: next(subwindow)))
+    # Bind Right key with Next
+    subwindow.bind("<Right>", (lambda event: next(subwindow)))
     Button(subwindow, text="Next", command=partial(next, subwindow)).pack()
     subwindow.mainloop()
