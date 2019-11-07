@@ -49,27 +49,22 @@ class StartPage(tk.Frame) :
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        
-
+        # Show Loading Background Image
         imgshow.loading_background_img(self)
-
         label = tk.Label(self, text="Welcome to UNITY Face Recognition ", font=LARGE_FONT)
         label.grid(row=0, column=0, padx=320, pady=150)
-        
 
 class MainPage(tk.Frame) :
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self,parent)
-
+        # Show Background Image
         imgshow.background_img(self)
-
         # Tkinter Variable Declaration
         sample = StringVar()
         T = IntVar()
         T.set(10) # set default value 
         choice = IntVar()
-
         # Show Header
         header(self)
 
@@ -87,41 +82,35 @@ class MainPage(tk.Frame) :
             filename.delete(0, END)
             filename.insert(0, name)
             sample = name
-
+        # Choose Sample Photo
         filelabel = Label(self, text = "Nama File Sample: ").grid(row = 14, column = 2, padx = 0, pady = 10)
         filename = Entry(self, textvariable = sample)
         filename.grid(row = 14, column = 3, columnspan = 2)
         button = Button(self, text="Browse File", command=lambda:open_dialog())
         button.grid(row = 14, column = 5, padx = 10)
-
+        # Choose T
         Label(self, text = "Banyaknya wajah yang cocok: ").grid(row = 15, column = 2, padx = 0, pady = 10) 
         Entry(self, textvariable = T).grid(row = 15, column = 3, columnspan = 2) 
-
+        # Choose Method (Cosine Similarity / Euclidean Distance)
         Label(self, text = "Metode: ").grid(row = 17, column = 2, padx = 0, pady = 10) 
         Radiobutton(self, text="Cosine Similarity", padx = 20, variable=choice, value=1).grid(row = 17, column = 4)
         Radiobutton(self, text="Euclidean Distance", padx = 20, variable=choice, value=2).grid(row = 17, column = 5)
-
+        # Run Button
         btn = Button(self, text = 'Run', command = lambda:[runfacerecog()], height = 1, width = 8).grid(row = 18, column = 4)
-
-        buttonhelp = tk.Button(self, text="Help",
-                                command=lambda: controller.show_frame(HelpPage)) 
+        # Help Button
+        buttonhelp = tk.Button(self, text="Help", command=lambda: controller.show_frame(HelpPage)) 
         buttonhelp.grid(row=18, column=5, padx = 2)
-
 
 class HelpPage(tk.Frame) :
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self,parent)
-        label = tk.Label(self, text="Help", font=LARGE_FONT)
-        label.grid(row=0, column=0)
-
+        # Show Background Image
         imgshow.background_img(self)
-
-        text1 = "Progam Face Recognition  "
-        button2 = tk.Button(self, text="<<",
-                                command=lambda: controller.show_frame(MainPage)) 
+        # Back to MainPage Button
+        button2 = tk.Button(self, text="<<", command=lambda: controller.show_frame(MainPage)) 
         button2.grid(row=0, column=9, pady=5)
-
+        # Show Help Text
         help_txt(self)
 
         def runfacerecog2(a,b,c):

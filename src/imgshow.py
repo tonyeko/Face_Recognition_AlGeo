@@ -5,7 +5,6 @@ from PIL import ImageTk, Image
 from functools import partial
 
 def loading_background_img(self):
-    # Add background image
     im = Image.open("img/loading-background.gif")
     backgroundfile = ImageTk.PhotoImage(im)
     background_label = Label(self, image=backgroundfile)
@@ -13,7 +12,6 @@ def loading_background_img(self):
     background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
 def background_img(self):
-    # Add background image
     im = Image.open("img/background_image.jpg")
     backgroundfile = ImageTk.PhotoImage(im)
     background_label = Label(self, image=backgroundfile)
@@ -21,7 +19,6 @@ def background_img(self):
     background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
 def next(subwindow):
-    # Hide/Unvisible
     subwindow.withdraw()
     subwindow.quit()
     subwindow.update()
@@ -36,7 +33,7 @@ def show_sample_img(path, window):
     imgtk = ImageTk.PhotoImage(image=im) 
     Label(window, text = name).grid(row = 14, column = 6)
     imglabel = Label(window, image=imgtk)
-    imglabel.image = imgtk  # keep a reference to the Tkinter object
+    imglabel.image = imgtk 
     imglabel.grid(row = 15, column = 6, rowspan = 7)
     Label(window).grid(pady = 3)
     
@@ -44,12 +41,9 @@ def show_img(path, similarity, index, method):
     img = cv2.imread(path)
     b,g,r = cv2.split(img)
     img = cv2.merge((r,g,b))
-    # A root window for displaying objects
     subwindow = Toplevel()
     subwindow.geometry('+800+480')
-
-    # set focus to subwindow
-    subwindow.focus()
+    subwindow.focus()   # set focus to subwindow
     i = StringVar()
     i = "Gambar ke-"+str(index)
     subwindow.title(i)
@@ -58,6 +52,7 @@ def show_img(path, similarity, index, method):
     name = "File Name:      " + os.path.basename(path)
     Label(subwindow, text=name).pack()
     
+    # Set sim variable for similarity
     sim = StringVar()
     if method == 1:
         string = "Similarity: "+ str(similarity) 
